@@ -26,3 +26,27 @@ class DenseNetwork:
                            loss='sparse_categorical_crossentropy', #labels are integers not one hot encoded
                            metrics=['accuracy']) 
         print(self.model.summary())
+
+    def fit(self, x_train, y_train, epochs=10, batch_size=32, validation_split=0.2):
+        history = self.model.fit(x_train, y_train, epochs=epochs, batch_size=batch_size, validation_split=validation_split)
+        return history
+    
+    #evaluate the model's performance
+    def evaluate(self, x_test, y_test):
+        test_loss, test_accuracy = self.model.evaluate(x_test, y_test)
+        print(f"Test accuracy: {test_accuracy:.4f}")
+        return test_loss, test_accuracy
+    
+    #get the predictions for the input data
+    def predict(self, x):
+        predictions = self.model.predict(x)
+        predicted_classes = np.argmax(predictions, axis=1)
+        return predicted_classes
+
+    def prediction_showcase(self, x, y, num_images=5):
+        predictions = self.predict(x)
+        for i in range(num_images):
+            plt.imshow(x[i], cmap='gray')
+            plt.title(f"True: {y[i]}, Predicted: {predictions[i]}")
+            plt.axis('off')
+            plt.show()

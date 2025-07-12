@@ -13,10 +13,11 @@ loader = MnistDataloader(
 (train_images, train_labels), (test_images, test_labels) = loader.load_data()
 
 
-# normalize data
+# normalize data + convert to numpy arrays
 train_images = np.array(train_images) / 255.0
 test_images = np.array(test_images) / 255.0
-
+train_labels = np.array(train_labels)
+test_labels = np.array(test_labels)
 
 # # Display a few training images
 # for i in range(5):
@@ -28,3 +29,5 @@ test_images = np.array(test_images) / 255.0
 # Initialize and compile the Dense Network
 dense_network = DenseNetwork(num_classes=10, input_shape=(28, 28))
 dense_network.compile_model()
+dense_network.fit(train_images, train_labels)
+dense_network.prediction_showcase(test_images, test_labels, num_images=5)
