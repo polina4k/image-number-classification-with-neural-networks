@@ -35,16 +35,29 @@ keras_history = dense_network.fit(train_images, train_labels, epochs=5, batch_si
 
 # Dense network from scratch
 dense_network_scratch = DenseNetworkScratch()
-scratch_history = dense_network_scratch.fit(train_images, train_labels, epochs=5, batch_size=32)
+scratch_loss, scratch_accuracy = dense_network_scratch.fit(train_images, train_labels, epochs=5, batch_size=32)
 
 # Model plot evaluation
-keras_loss = keras_history.history['loss']
-scratch_loss = scratch_history
+epochs = np.arange(1, 6)  # Assuming 5 epochs
 
-plt.plot(keras_loss, label='Tensorflow Loss')
-plt.plot(scratch_loss, label='Numpy model Loss')
+keras_loss = keras_history.history['loss']
+
+plt.xticks(epochs)
+plt.plot(epochs, keras_loss, label='Tensorflow Loss')
+plt.plot(epochs, scratch_loss, label='Numpy model Loss')
 plt.xlabel('Epoch')
 plt.ylabel('Loss')
 plt.legend()
 plt.title('Tensorflow vs Numpy Dense Network Loss')
+plt.show()
+
+keras_accuracy = keras_history.history['accuracy']
+
+plt.xticks(epochs)
+plt.plot(epochs, keras_accuracy, label='Tensorflow Accuracy')
+plt.plot(epochs, scratch_accuracy, label='Numpy model accuracy')
+plt.xlabel('Epoch')
+plt.ylabel('Accuracy')
+plt.legend()
+plt.title('Tensorflow vs Numpy Dense Network Accuracy')
 plt.show()
