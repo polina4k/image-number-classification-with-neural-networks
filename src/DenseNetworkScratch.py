@@ -120,7 +120,28 @@ class DenseNetworkScratch:
         grads = self.backpropagate(y_pred, minibatch_y, forward_cache)
         self.update_weights(grads)
 
-    
+    def fit(self, X_train, y_train, epochs=10, batch_size=32):
+        loss = []
+        for epoch in range(epochs):
+            print(f"Epoch {epoch+1}/{epochs}")
+            indices = np.arange(X_train.shape[0]) #shuffle data each epoch
+            np.random.shuffle(indices)
+            X_train_shuffled = X_train[indices]
+            y_train_shuffled = y_train[indices]
+            num_batches = X_train.shape[0] // batch_size
+            for i in range(num_batches):
+                start = i * batch_size
+                end = start + batch_size
+                minibatch_X = X_train_shuffled[start:end]
+                minibatch_y = y_train_shuffled[start:end]
+                
+                y_pred, forward_cache = self.forwardPropagate(minibatch_X)
+                grads = self.backpropagate(y_pred, minibatch_y, forward_cache)
+                self.update_weights(grads)
+            loss_value = self.loss(y_train, self.forwardPropagate(X_train)[0])
+            loss.append(loss_value)
+            print(f"Epoch {epoch+1} completed, Loss: {loss_value:.4f}")
+        return loss
 
     
     
