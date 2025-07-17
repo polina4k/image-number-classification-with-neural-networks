@@ -3,6 +3,6 @@ This is my first ever project with neural networks, in which I am implementing a
 
 In the src folder, there are files for networks created with the tensorflow library, as well as implementations from scratch with numpy.
 
-![](ModelEval.png)
+![](evaluation_imgs/ModelEval.png)
 
-![](ModelEval2.png)
+![](evaluation_imgs/ModelEval2.png)
